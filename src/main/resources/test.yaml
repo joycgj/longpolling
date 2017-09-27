@@ -1,0 +1,26 @@
+groupId : 0         #组序号
+serialNum : 0       #此机器在当前组的序号
+db : "/tmp/chronos" #实际dbpath可能是/tmp/chronos01,/tmp/chronos02等多个
+
+
+DBPullConfig :
+  numMsgPerPick : 1000 #每次从db中取出的消息数量
+
+MQPullConfig :
+  group : cg_chronos_inner_0_0
+  proxyAddrs : 10.95.121.43:9713 #因为使用的是low_level，故只能填写一个proxyAddr
+  retryIntervalInMs : 500
+  maxBatchSize : 8
+
+  #lowlevel
+  clusterName : R_test
+  timeout : 30000
+  commitAckInterval : 10000
+
+MQSendConfig :
+  proxyAddrs :
+    - 172.22.23.190:9613
+  proxyTimeout : 50
+  clientRetry : 2
+  clientTimeout : 100
+  poolSize : 20
